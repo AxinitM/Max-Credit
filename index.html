@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
+    <title>Max Credit</title>
+    <style>
+      :root {
+        --mainColor: #000080; /* navy */
+        --backgroundColor: #d3d3d3; /* lightgray */
+        --textColor: #1f1f1f; /* darkgray */
+        --navyTransparent: rgba(
+          0,
+          0,
+          128,
+          0.1
+        ); /* navy с минимальной opacity */
+        --whiteColor: #ffffff;
+
+        /* fonts */
+
+        --mainFont: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+
+      /* general sets */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--mainFont);
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--backgroundColor);
+        font-size: 16px;
+        color: var(--textColor);
+      }
+
+      h1 {
+        margin: 25px auto 0px;
+        color: var(--mainColor);
+      }
+
+      /*  credit container sets */
+      #credit-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 90%;
+        max-width: 576px;
+        background-color: white;
+        margin: 75px auto;
+        border-radius: 10px;
+      }
+
+      /* table sets */
+      table {
+        margin: 20px;
+        border-collapse: collapse;
+        max-width: 90%;
+        /* background-color: white; */
+        table-layout: fixed; 
+      }
+
+      th,
+      td {
+        width: 33.33%; 
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: var(--mainColor);
+        color: white;
+        font-weight: bold;
+        border: 1px solid white;
+      }
+
+      .td-left-align {
+        text-align: left;
+        border-radius: 7px 0px 0px 7px;
+      }
+
+      .td-right-align {
+        text-align: right;
+        border-radius: 0px 7px 7px 0px;
+      }
+
+      /* tbody tr:nth-child(odd) {
+        background-color: var(--backgroundColor);
+      } */
+
+      tbody tr:nth-child(even) {
+        background-color: var(--navyTransparent);
+      }
+
+      tbody tr {
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      tbody tr:hover {
+        color: var(--mainColor);
+      }
+
+      td {
+        border-left: none;
+        border-right: none;
+      }
+
+      td input[type="radio"] {
+        margin-right: 5px;
+      }
+
+      /* footer sets */
+      footer {
+        width: 75%;
+        margin: 15px auto 25px;
+      }
+
+      .text-footer {
+        text-align: center;
+        line-height: 1.4;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="credit-container">
+      <h1>Max Credit</h1>
+      <table>
+        <thead>
+          <tr>
+            <th class="td-left-align">Срок</th>
+            <th>В месяц</th>
+            <th class="td-right-align">Всего</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-left-align">
+              <input type="radio" name="term" value="3" checked />3 месяца
+            </td>
+            <td class="monthly-payment">lei</td>
+            <td class="td-right-align total-payment">lei</td>
+          </tr>
+          <tr>
+            <td class="td-left-align">
+              <input type="radio" name="term" value="6" />6 месяцев
+            </td>
+            <td class="monthly-payment">lei</td>
+            <td class="td-right-align total-payment">lei</td>
+          </tr>
+          <tr>
+            <td class="td-left-align">
+              <input type="radio" name="term" value="9" />9 месяцев
+            </td>
+            <td class="monthly-payment">lei</td>
+            <td class="td-right-align total-payment">lei</td>
+          </tr>
+          <tr>
+            <td class="td-left-align">
+              <input type="radio" name="term" value="12" />12 месяцев
+            </td>
+            <td class="monthly-payment">lei</td>
+            <td class="td-right-align total-payment">lei</td>
+          </tr>
+          <tr>
+            <td class="td-left-align">
+              <input type="radio" name="term" value="18" />18 месяцев
+            </td>
+            <td class="monthly-payment">lei</td>
+            <td class="td-right-align total-payment">lei</td>
+          </tr>
+          <tr>
+            <td class="td-left-align">
+              <input type="radio" name="term" value="24" />24 месяца
+            </td>
+            <td class="monthly-payment">lei</td>
+            <td class="td-right-align total-payment">lei</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <footer>
+        <p class="text-footer">
+          Отправляя заявку вы соглашаетесь с условиями сайта и
+          политикой конфиденциальности
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Прилизительные проценты для каждого периода
+        const percentages = {
+          3: 1.05, // +5%
+          6: 1.09, // +9%
+          9: 1.11, // +11%
+          12: 1.17, // +17%
+          18: 1.25, // +25%
+          24: 1.34, // +34%
+        };
+
+        // Запрашиваем стоимость товара у пользователя
+        let itemPrice;
+        do {
+          itemPrice = parseFloat(
+            prompt("Введите стоимость товара (от 1000 до 100 000 леев):", "")
+          );
+        } while (isNaN(itemPrice) || itemPrice < 1000 || itemPrice > 100000);
+
+        // Получаем все строки таблицы
+        const rows = document.querySelectorAll("tbody tr");
+
+        console.log(`Стоимость товара: ${itemPrice} леев`);
+        rows.forEach((row) => {
+          // Получаем срок кредита из value радио-кнопки
+          const radioButton = row.querySelector("input[type='radio']");
+          const term = parseInt(radioButton.value);
+
+          // Рассчитываем общую сумму и месячный платеж
+          const totalPayment = Math.round(itemPrice * percentages[term]);
+          const monthlyPayment = Math.round(totalPayment / term);
+
+          // Обновляем графы "Всего" и "В месяц"
+          row.querySelector(
+            ".total-payment"
+          ).textContent = `${totalPayment} lei`;
+          row.querySelector(
+            ".monthly-payment"
+          ).textContent = `${monthlyPayment} lei`;
+
+          // Выводим результаты в консоль
+          console.log(`Срок: ${term} месяцев`);
+          console.log(`Итоговая сумма: ${totalPayment} леев`);
+          console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
+
+          // Добавляем обработчик события для выбора радио-кнопки при нажатии на строку
+          row.addEventListener("click", () => {
+            radioButton.checked = true; // Устанавливаем радиокнопку активной
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
