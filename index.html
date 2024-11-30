@@ -246,14 +246,13 @@
             ".monthly-payment"
           ).textContent = `${monthlyPayment} lei`;
 
-          // Выводим результаты в консоль
+         
           const percentage = Math.round((percentages[term] - 1) * 100);
           console.log(`Срок: ${term} месяцев`);
           console.log(`Процент: ${percentage}%`);
           console.log(`Итоговая сумма: ${totalPayment} леев`);
           console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
 
-          // Выбор радио-кнопки при нажатии на строку
           row.addEventListener("click", () => {
             radioButton.checked = true; // Устанавливаем радиокнопку активной
           });
