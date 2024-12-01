@@ -1,263 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
-    <title>Max Credit</title>
-    <style>
-      :root {
-        --mainColor: #000080; /* navy */
-        --backgroundColor: #d3d3d3; /* lightgray */
-        --textColor: #1f1f1f; /* darkgray */
-        --navyTransparent: rgba(
-          0,
-          0,
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon-32x32.png" type="image/x-icon" />
+  <title>Max Credit</title>
+
+  <style>
+    :root {
+      --mainColor: rgb(0, 129, 55);
+      /* MicroCreditInvest's green */
+      --backgroundColor: #d3d3d3;
+      /* lightgray */
+      --textColor: #1f1f1f;
+      /* darkgray */
+      --tableRowColor: rgba(0,
           128,
-          0.1
-        ); /* navy с минимальной opacity */
-        --whiteColor: #ffffff;
+          0,
+          0.2);
+      /* Green с минимальной opacity*/
+      --whiteColor: #ffffff;
 
-        /* fonts */
+      /* fonts */
 
-        --mainFont: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-          "Lucida Sans", Arial, sans-serif;
-      }
+      --mainFont: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    }
 
-      /* general sets */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: var(--mainFont);
-      }
+    /* general sets */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--mainFont);
+    }
 
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        width: 100%;
-        background-color: var(--backgroundColor);
-        font-size: 16px;
-        color: var(--textColor);
-      }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      background-color: var(--backgroundColor);
+      font-size: 16px;
+      color: var(--textColor);
+    }
 
-      h1 {
-        margin: 25px auto 0px;
-        color: var(--mainColor);
-      }
 
-      /*  credit container sets */
-      #credit-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        width: 90%;
-        max-width: 576px;
-        background-color: white;
-        margin: 75px auto;
-        border-radius: 10px;
-      }
+    /*  credit container sets */
+    #credit-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 90%;
+      max-width: 576px;
+      background-color: white;
+      margin: 75px auto;
+      border-radius: 10px;
+    }
 
-      /* table sets */
-      table {
-        margin: 20px;
-        border-collapse: collapse;
-        max-width: 90%;
-        /* background-color: white; */
-        table-layout: fixed; 
-      }
+    #credit-container img {
+      width: 100%;
+      height: 50px;
+      margin: 30px auto 10px;
 
-      th,
-      td {
-        width: 33.33%; 
-        padding: 10px;
-        text-align: center;
-      }
+    }
 
-      th {
-        background-color: var(--mainColor);
-        color: white;
-        font-weight: bold;
-        border: 1px solid white;
-      }
+    /* table sets */
+    table {
+      margin: 20px;
+      border-collapse: collapse;
+      max-width: 90%;
+      table-layout: fixed;
+    }
 
-      .td-left-align {
-        text-align: left;
-        border-radius: 7px 0px 0px 7px;
-      }
+    th,
+    td {
+      width: 33.33%;
+      padding: 10px;
+      text-align: center;
+    }
 
-      .td-right-align {
-        text-align: right;
-        border-radius: 0px 7px 7px 0px;
-      }
+    th {
+      background-color: var(--mainColor);
+      color: white;
+      font-weight: bold;
+      border: 1px solid white;
+    }
 
-      /* tbody tr:nth-child(odd) {
-        background-color: var(--backgroundColor);
-      } */
+    .td-left-align {
+      text-align: left;
+      border-radius: 5px 0px 0px 5px;
+    }
 
-      tbody tr:nth-child(even) {
-        background-color: var(--navyTransparent);
-      }
+    .td-right-align {
+      text-align: right;
+      border-radius: 0px 5px 5px 0px;
+    }
 
-      tbody tr {
-        cursor: pointer;
-        transition: color 0.3s;
-      }
+    tbody tr:nth-child(even) {
+      background-color: var(--tableRowColor);
+    }
 
-      tbody tr:hover {
-        color: var(--mainColor);
-      }
+    tbody tr {
+      cursor: pointer;
+      transition: color 0.3s;
+    }
 
-      td {
-        border-left: none;
-        border-right: none;
-      }
+    tbody tr:hover {
+      color: var(--mainColor);
+    }
 
-      td input[type="radio"] {
-        margin-right: 5px;
-      }
+    td {
+      border-left: none;
+      border-right: none;
+    }
 
-      /* footer sets */
-      footer {
-        width: 75%;
-        margin: 15px auto 25px;
-      }
+    td input[type="radio"] {
+      margin-right: 5px;
+    }
 
-      .text-footer {
-        text-align: center;
-        line-height: 1.4;
-        font-size: 0.8rem;
-      }
-    </style>
-  </head>
+    /* personal info section */
 
-  <body>
-    <div id="credit-container">
-      <h1>Max Credit</h1>
-      <table>
-        <thead>
-          <tr>
-            <th class="td-left-align">Срок</th>
-            <th>В месяц</th>
-            <th class="td-right-align">Всего</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="td-left-align">
-              <input type="radio" name="term" value="3" checked />3 месяца
-            </td>
-            <td class="monthly-payment">lei</td>
-            <td class="td-right-align total-payment">lei</td>
-          </tr>
-          <tr>
-            <td class="td-left-align">
-              <input type="radio" name="term" value="6" />6 месяцев
-            </td>
-            <td class="monthly-payment">lei</td>
-            <td class="td-right-align total-payment">lei</td>
-          </tr>
-          <tr>
-            <td class="td-left-align">
-              <input type="radio" name="term" value="9" />9 месяцев
-            </td>
-            <td class="monthly-payment">lei</td>
-            <td class="td-right-align total-payment">lei</td>
-          </tr>
-          <tr>
-            <td class="td-left-align">
-              <input type="radio" name="term" value="12" />12 месяцев
-            </td>
-            <td class="monthly-payment">lei</td>
-            <td class="td-right-align total-payment">lei</td>
-          </tr>
-          <tr>
-            <td class="td-left-align">
-              <input type="radio" name="term" value="18" />18 месяцев
-            </td>
-            <td class="monthly-payment">lei</td>
-            <td class="td-right-align total-payment">lei</td>
-          </tr>
-          <tr>
-            <td class="td-left-align">
-              <input type="radio" name="term" value="24" />24 месяца
-            </td>
-            <td class="monthly-payment">lei</td>
-            <td class="td-right-align total-payment">lei</td>
-          </tr>
-        </tbody>
-      </table>
+    #personal-info-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      row-gap: 1rem;
+    }
 
-      <footer>
-        <p class="text-footer">
-          Отправляя заявку вы соглашаетесь с условиями сайта и
-          политикой конфиденциальности
-        </p>
-      </footer>
-    </div>
+    #personal-info-section input {
+      width: 90%;
+      min-width: 250px;
+      padding: 0.5rem;
+      /* font-size: 1rem; */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      /* height: 25px; */
+    }
 
- <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Прилизительные проценты для каждого периода
-        const percentages = {
-          3: 1.05, // +5%
-          6: 1.09, // +9%
-          9: 1.11, // +11%
-          12: 1.17, // +17%
-          18: 1.25, // +25%
-          24: 1.34, // +34%
-        };
+    .input-container {
+      display: flex;
+      flex-direction: column;
+    }
 
+    .input-container label {
+      margin-bottom: 5px;
+    }
+
+    /* button sets */
+
+    #personal-info-section button {
+      width: 150px;
+      color: whitesmoke;
+      background-color: var(--mainColor);
+      padding: 10px 0px;
+      margin: 15px auto;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+
+    }
+
+    #personal-info-section button:active {
+      transform: scale(0.95);
+    }
+
+
+    /* footer sets */
+    footer {
+      width: 75%;
+      margin: 15px auto 25px;
+    }
+
+    .text-footer {
+      text-align: center;
+      line-height: 1.4;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="credit-container">
+
+    <img src="logo-1.svg" alt="The Microinvest's Logo" loading="auto"></img>
+    <table>
+      <thead>
+        <tr>
+          <th class="td-left-align">Termen</th>
+          <th>Lunar</th>
+          <th class="td-right-align">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-left-align">
+            <input type="radio" name="term" value="3" checked />3 luni
+          </td>
+          <td class="monthly-payment">lei</td>
+          <td class="td-right-align total-payment">lei</td>
+        </tr>
+        <tr>
+          <td class="td-left-align">
+            <input type="radio" name="term" value="6" />6 luni
+          </td>
+          <td class="monthly-payment">lei</td>
+          <td class="td-right-align total-payment">lei</td>
+        </tr>
+        <tr>
+          <td class="td-left-align">
+            <input type="radio" name="term" value="9" />9 luni
+          </td>
+          <td class="monthly-payment">lei</td>
+          <td class="td-right-align total-payment">lei</td>
+        </tr>
+        <tr>
+          <td class="td-left-align">
+            <input type="radio" name="term" value="12" />12 luni
+          </td>
+          <td class="monthly-payment">lei</td>
+          <td class="td-right-align total-payment">lei</td>
+        </tr>
+        <tr>
+          <td class="td-left-align">
+            <input type="radio" name="term" value="18" />18 luni
+          </td>
+          <td class="monthly-payment">lei</td>
+          <td class="td-right-align total-payment">lei</td>
+        </tr>
+        <tr>
+          <td class="td-left-align">
+            <input type="radio" name="term" value="24" />24 luni
+          </td>
+          <td class="monthly-payment">lei</td>
+          <td class="td-right-align total-payment">lei</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form id="personal-info-section">
+
+      <div class="input-container">
+        <label for="first-name">Prenume</label>
+        <input type="text" id="first-name" name="first-name" required title="Introduceți doar litere" />
+      </div>
+      <div class="input-container">
+        <label for="last-name">Nume</label>
+        <input type="text" id="last-name" name="last-name" required title="Introduceți doar litere" />
+      </div>
+      <div class="input-container">
+        <label for="phone">Număr de telefon mobil</label>
+        <input type="tel" id="phone" name="phone" required title="Introduceți doar cifre" />
+      </div>
+      <button type="submit">Submit</button>
+
+    </form>
+    </main>
+    <footer>
+      <p class="text-footer">
+        Prin trimiterea cererii, sunteți de acord cu termenii site-ului și cu politica de confidențialitate
+      </p>
+    </footer>
+  </div>
+
+  <!-- <script src="script.js" defer></script> -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Прилизительные проценты для каждого периода
+      const percentages = {
+        3: 1.05, // +5%
+        6: 1.09, // +9%
+        9: 1.11, // +11%
+        12: 1.17, // +17%
+        18: 1.25, // +25%
+        24: 1.34, // +34%
+      };
+
+      // Форма получения цены товара, нужна только для теста. 
+      // Реальная цена для рассчета берется из карточки товара, когда покупател ь нажимает кнопку "В кредит"
+
+      let itemPrice;
+      do {
+        itemPrice = prompt(
+          "Введите стоимость товара (от 1000 до 100 000 леев):",
+          ""
+        );
+
+        // Если поле пустое и нажата кнопка "Отмена", выходим из цикла
+        if (itemPrice === null) {
+          console.log("Пользователь отменил ввод.");
+          return; // Выход из функции, если пользователь нажал "Отмена"
+        }
+
+        itemPrice = parseFloat(itemPrice); // Преобразуем в число
+      } while (isNaN(itemPrice) || itemPrice < 1000 || itemPrice > 100000);
+
+      console.log(`Стоимость товара: ${itemPrice} леев`);
+
+      //Конец тестовой формы для получения цены товара
+
+      // начало основного блока для расчета суммы кредита 
+      // Получаем все строки таблицы
+      const rows = document.querySelectorAll("tbody tr");
+
+      rows.forEach((row) => {
+        // Получаем срок кредита из value радио-кнопки
+        const radioButton = row.querySelector("input[type='radio']");
+        const term = parseInt(radioButton.value);
+
+        // Рассчитываем общую сумму и месячный платеж
+        const totalPayment = Math.round(itemPrice * percentages[term]);
+        const monthlyPayment = Math.round(totalPayment / term);
+
+        // Обновляем графы "Всего" и "В месяц"
+        row.querySelector(
+          ".total-payment"
+        ).textContent = `${totalPayment} lei`;
+        row.querySelector(
+          ".monthly-payment"
+        ).textContent = `${monthlyPayment} lei`;
+
+        // Выводим результаты расчета в консоль
        
-        let itemPrice;
-        do {
-          itemPrice = prompt(
-            "Введите стоимость товара (от 1000 до 100 000 леев):",
-            ""
-          );
-        
-          if (itemPrice === null) {
-            console.log("Пользователь отменил ввод.");
-            return; 
-          }
+        const percentage = Math.round((percentages[term] - 1) * 100);
+        console.log(`Срок: ${term} месяцев`);
+        console.log(`Процент: ${percentage}%`);
+        console.log(`Итоговая сумма: ${totalPayment} леев`);
+        console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
 
-          itemPrice = parseFloat(itemPrice); // Преобразуем в число
-        } while (isNaN(itemPrice) || itemPrice < 1000 || itemPrice > 100000);
-
-        console.log(`Стоимость товара: ${itemPrice} леев`);
-
-       const rows = document.querySelectorAll("tbody tr");
-
-        rows.forEach((row) => {
-          const radioButton = row.querySelector("input[type='radio']");
-          const term = parseInt(radioButton.value);
-        
-          const totalPayment = Math.round(itemPrice * percentages[term]);
-          const monthlyPayment = Math.round(totalPayment / term);
-
-          row.querySelector(
-            ".total-payment"
-          ).textContent = `${totalPayment} lei`;
-          row.querySelector(
-            ".monthly-payment"
-          ).textContent = `${monthlyPayment} lei`;
-
-         
-          const percentage = Math.round((percentages[term] - 1) * 100);
-          console.log(`Срок: ${term} месяцев`);
-          console.log(`Процент: ${percentage}%`);
-          console.log(`Итоговая сумма: ${totalPayment} леев`);
-          console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
-
-          row.addEventListener("click", () => {
-            radioButton.checked = true; // Устанавливаем радиокнопку активной
-          });
+        // Выбор радио-кнопки при нажатии на любом месте строки таблицы
+        row.addEventListener("click", () => {
+          radioButton.checked = true;
         });
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
+
 </html>
