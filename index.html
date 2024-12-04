@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="favicon-32x32.png" type="image/x-icon" />
-  <title>Max Credit</title>
+  <title>Microinvest Credit</title>
 
   <style>
     :root {
@@ -19,7 +19,7 @@
       --tableRowColor: rgba(0,
           128,
           0,
-          0.2);
+          0.1);
       /* Green с минимальной opacity*/
       --whiteColor: #ffffff;
 
@@ -55,6 +55,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      position: relative;
       width: 90%;
       max-width: 576px;
       background-color: white;
@@ -65,7 +66,7 @@
     #credit-container img {
       width: 100%;
       height: 50px;
-      margin: 30px auto 10px;
+      margin: 40px auto 10px;
 
     }
 
@@ -137,10 +138,10 @@
       width: 90%;
       min-width: 250px;
       padding: 0.5rem;
-      /* font-size: 1rem; */
+
       border: 1px solid #ccc;
       border-radius: 5px;
-      /* height: 25px; */
+
     }
 
     .input-container {
@@ -172,8 +173,30 @@
       transform: scale(0.95);
     }
 
+    /* close cross/button */
 
-    /* footer sets */
+    .closeButton {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: var(--textColor);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* thanks-message*/
+
+    #thanks-message {
+      display: none;
+      text-align: center;
+      padding: 20px 20px 30px;
+      line-height: 1.4;
+      font-size: 0.8rem;
+    }
+
+        /* footer sets */
     footer {
       width: 75%;
       margin: 15px auto 25px;
@@ -189,8 +212,12 @@
 
 <body>
   <div id="credit-container">
+    <!-- close cross/button -->
+    <span class="closeButton">&times;</span>
+    <!-- logo -->
+    <img src="mci-logo.svg" alt="The Microinvest's Logo" loading="auto"></img>
 
-    <img src="logo-1.svg" alt="The Microinvest's Logo" loading="auto"></img>
+    <!-- table section / terms, %, monthly payments -->
     <table>
       <thead>
         <tr>
@@ -245,6 +272,7 @@
       </tbody>
     </table>
 
+    <!--  personal info section -->
     <form id="personal-info-section">
 
       <div class="input-container">
@@ -259,10 +287,23 @@
         <label for="phone">Număr de telefon mobil</label>
         <input type="tel" id="phone" name="phone" required title="Introduceți doar cifre" />
       </div>
-      <button type="submit">Submit</button>
+
+      <!-- button Trimite  -->
+
+      <button type="submit">Trimite</button>
 
     </form>
+    <!-- thank message -->
+    <aside>
+      <div id="thanks-message">
+        <p>Vă mulțumim că ați utilizat serviciile noastre!</p>
+        <p>Cererea dumneavoastră a fost trimisă cu succes.</p>
+        <p>Vă vom contacta în cel mai scurt timp.</p>
+      </div>
+    </aside>
+
     </main>
+    <!-- footer -->
     <footer>
       <p class="text-footer">
         Prin trimiterea cererii, sunteți de acord cu termenii site-ului și cu politica de confidențialitate
@@ -273,75 +314,121 @@
   <!-- <script src="script.js" defer></script> -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Прилизительные проценты для каждого периода
       const percentages = {
-        3: 1.05, // +5%
-        6: 1.09, // +9%
-        9: 1.11, // +11%
-        12: 1.17, // +17%
-        18: 1.25, // +25%
-        24: 1.34, // +34%
+        3: 1.05,
+        6: 1.09,
+        9: 1.11,
+        12: 1.17,
+        18: 1.25,
+        24: 1.34,
       };
-
-      // Форма получения цены товара, нужна только для теста. 
-      // Реальная цена для рассчета берется из карточки товара, когда покупател ь нажимает кнопку "В кредит"
 
       let itemPrice;
       do {
-        itemPrice = prompt(
-          "Введите стоимость товара (от 1000 до 100 000 леев):",
-          ""
-        );
+        itemPrice = prompt("Введите стоимость товара (от 1000 до 100 000 леев):", "");
 
-        // Если поле пустое и нажата кнопка "Отмена", выходим из цикла
         if (itemPrice === null) {
           console.log("Пользователь отменил ввод.");
-          return; // Выход из функции, если пользователь нажал "Отмена"
+          return;
         }
 
-        itemPrice = parseFloat(itemPrice); // Преобразуем в число
+        itemPrice = parseFloat(itemPrice);
       } while (isNaN(itemPrice) || itemPrice < 1000 || itemPrice > 100000);
 
-      console.log(`Стоимость товара: ${itemPrice} леев`);
+      // Вывод в консоль введенной покупателем стоимости товара  
+      // console.log(`Стоимость товара: ${itemPrice} lei`);
 
-      //Конец тестовой формы для получения цены товара
-
-      // начало основного блока для расчета суммы кредита 
-      // Получаем все строки таблицы
+      // Начало основного блока для расчета суммы кредита
       const rows = document.querySelectorAll("tbody tr");
 
       rows.forEach((row) => {
-        // Получаем срок кредита из value радио-кнопки
         const radioButton = row.querySelector("input[type='radio']");
         const term = parseInt(radioButton.value);
 
-        // Рассчитываем общую сумму и месячный платеж
         const totalPayment = Math.round(itemPrice * percentages[term]);
         const monthlyPayment = Math.round(totalPayment / term);
 
-        // Обновляем графы "Всего" и "В месяц"
-        row.querySelector(
-          ".total-payment"
-        ).textContent = `${totalPayment} lei`;
-        row.querySelector(
-          ".monthly-payment"
-        ).textContent = `${monthlyPayment} lei`;
+        row.querySelector(".total-payment").textContent = `${totalPayment} lei`;
+        row.querySelector(".monthly-payment").textContent = `${monthlyPayment} lei`;
 
-        // Выводим результаты расчета в консоль
-       
         const percentage = Math.round((percentages[term] - 1) * 100);
-        console.log(`Срок: ${term} месяцев`);
-        console.log(`Процент: ${percentage}%`);
-        console.log(`Итоговая сумма: ${totalPayment} леев`);
-        console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
 
-        // Выбор радио-кнопки при нажатии на любом месте строки таблицы
+        // Вывод в консоль итоговых рассчетов для каждого срока кредита 
+        // console.log(`Срок: ${term} месяцев`);
+        // console.log(`Процент: ${percentage}%`);
+        // console.log(`Итоговая сумма: ${totalPayment} леев`);
+        // console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
+
         row.addEventListener("click", () => {
           radioButton.checked = true;
         });
       });
+
+      const form = document.getElementById("personal-info-section");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const firstName = document.getElementById("first-name").value;
+        const lastName = document.getElementById("last-name").value;
+        const phone = document.getElementById("phone").value;
+        const selectedTerm = document.querySelector('input[name="term"]:checked').value;
+
+        const namePattern = /^[A-Za-zĂăÂâÎîŞşŢţ]+$/;
+        if (firstName.length < 2 || !namePattern.test(firstName)) {
+          alert("Prenumele trebuie să conțină cel puțin două litere și să fie scris doar în litere.");
+          return;
+        }
+        if (lastName.length < 2 || !namePattern.test(lastName)) {
+          alert("Numele trebuie să conțină cel puțin două litere și să fie scris doar în litere.");
+          return;
+        }
+
+        const phonePattern = /^0\d{8}$/;
+        if (!phonePattern.test(phone)) {
+          alert("Numărul de telefon trebuie să înceapă cu 0 și să conțină exact 9 cifre.");
+          return;
+        }
+
+        // Если все проверки пройдены, скрываем форму, таблицу и footer и показываем благодарственное сообщение
+        form.style.display = "none";
+
+        const tableContainer = document.querySelector("table");
+        if (tableContainer) tableContainer.style.display = "none";
+
+        const footerContainer = document.querySelector("footer");
+        if (footerContainer) footerContainer.style.display = "none";
+
+        const thanksMessage = document.getElementById("thanks-message");
+        thanksMessage.style.display = "block";
+
+        // Рассчитываем общую сумму и ежемесячный платеж
+        const totalPayment = Math.round(itemPrice * percentages[selectedTerm]);
+        const monthlyPayment = Math.round(totalPayment / selectedTerm);
+
+        // Вывод итоговой информации  в консоль
+        console.log(`Имя покупателя: ${firstName}`);
+        console.log(`Фамилия покупателя: ${lastName}`);
+        console.log(`Телефон: ${phone}`);
+        console.log(`Стоимость товара: ${itemPrice} леев`);
+        console.log(`Выбранный срок кредита: ${selectedTerm} месяцев`);
+        console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
+        console.log(`Итоговая сумма: ${totalPayment} леев`);
+
+        // Закрытие окна (крест в правом верхнем углу)
+        const closeButton = document.querySelector(".closeButton");
+        const creditContainer = document.getElementById("credit-container");
+
+        closeButton.addEventListener("click", () => {
+          creditContainer.style.display = "none";
+        });
+
+      });
     });
   </script>
+
+
+
 </body>
 
 </html>
