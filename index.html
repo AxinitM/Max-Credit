@@ -338,7 +338,9 @@
       // Вывод в консоль введенной покупателем стоимости товара  
       // console.log(`Стоимость товара: ${itemPrice} lei`);
 
+    
       // Начало основного блока для расчета суммы кредита
+      // получение данных из таблицы
       const rows = document.querySelectorAll("tbody tr");
 
       rows.forEach((row) => {
@@ -359,10 +361,21 @@
         // console.log(`Итоговая сумма: ${totalPayment} леев`);
         // console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
 
+         // Закрытие окна (крест в правом верхнем углу)
+         const closeButton = document.querySelector(".closeButton");
+        const creditContainer = document.getElementById("credit-container");
+
+        closeButton.addEventListener("click", () => {
+          creditContainer.style.display = "none";
+        });
+
+      // активация радиокнопки при нажатии в любое место строки таблицы с этой радиокнопкой
         row.addEventListener("click", () => {
           radioButton.checked = true;
         });
       });
+
+      // проверка информации, введенной покупателем 
 
       const form = document.getElementById("personal-info-section");
 
@@ -415,13 +428,7 @@
         console.log(`Ежемесячный платеж: ${monthlyPayment} леев`);
         console.log(`Итоговая сумма: ${totalPayment} леев`);
 
-        // Закрытие окна (крест в правом верхнем углу)
-        const closeButton = document.querySelector(".closeButton");
-        const creditContainer = document.getElementById("credit-container");
-
-        closeButton.addEventListener("click", () => {
-          creditContainer.style.display = "none";
-        });
+       
 
       });
     });
