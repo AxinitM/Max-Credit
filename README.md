@@ -7,7 +7,7 @@ In the current test mode, the product price is entered manually through a prompt
 The modal also features a personal information form with validation and feedback mechanisms.
 
 ## Screenshot
-![](./screenshot.png)
+![](./Screenshot.png)
 
 ## Links
 [Credit Calculator Page](https://axinitm.github.io/Max-Credit/)
