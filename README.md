@@ -6,6 +6,9 @@ In the full version, the product price (used for loan calculations) will be retr
 In the current test mode, the product price is entered manually through a prompt window.
 The modal also features a personal information form with validation and feedback mechanisms.
 
+## Screenshot
+![](./screenshot.png)
+
 ## Links
 [Credit Calculator Page](https://axinitm.github.io/Max-Credit/)
 
