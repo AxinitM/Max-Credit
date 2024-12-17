@@ -6,6 +6,9 @@ In the full version, the product price (used for loan calculations) will be retr
 In the current test mode, the product price is entered manually through a prompt window.
 The modal also features a personal information form with validation and feedback mechanisms.
 
+## Links
+[Credit Calculator](https://axinitm.github.io/Max-Credit/))
+
 ## Features
 - **Dynamic Loan Calculation**: Calculates monthly and total payments based on user input and predefined percentages for different loan terms.
 - **Interactive Table**: Users can select loan terms directly from the table, which updates the calculations in real-time.
